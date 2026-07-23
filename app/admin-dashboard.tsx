@@ -10,7 +10,7 @@ import { supabase } from '../supabaseConfig';
 
 const { width } = Dimensions.get('window');
 
-// Android වල LayoutAnimation වැඩ කරන්න මේක අනිවාර්යයි
+// Android  LayoutAnimation must
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     tickets: 0 
   });
 
-  // 🕒 Live Date & Time Tracker
+  //  Live Date & Time Tracker
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
         return acc + (Number(curr.total_amount) || 0);
       }, 0) || 0;
 
-      // 🔥 UI Spring Animation
+      //  UI Spring Animation
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
 
       setStats({
@@ -84,10 +84,10 @@ export default function AdminDashboard() {
 
   // ⚡ High-Performance Unified Real-time Engine
   useEffect(() => {
-    // පළමු වතාවට ඩේටා ටික ලෝඩ් කරගන්නවා
+    // data load 1st
     fetchRealTimeStats();
 
-    // සියලුම ටේබල් ලයිව් ට්‍රැක් කරන්න තනි චැනල් එකක් භාවිතා කරයි
+    
     const dashboardChannel = supabase
       .channel('db-console-changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => { fetchRealTimeStats(); })
@@ -116,7 +116,7 @@ export default function AdminDashboard() {
     );
   }
 
-  // 📈 Graph Dynamics
+  // Graph Dynamics
   const maxBarHeight = 100;
   const ordersHeight = stats.orders > 0 ? Math.min(maxBarHeight, 30 + stats.orders * 12) : 20;
   const inventoryHeight = stats.products > 0 ? Math.min(maxBarHeight, 20 + stats.products * 4) : 15;
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
             </View>
           </View>
 
-          {/* 📊 Chart */}
+          {/*  Chart */}
           <View style={styles.chartVisualCard}>
             <Text style={styles.chartTitle}>Infrastructure Load Nodes (Live)</Text>
             <View style={styles.barChartContainer}>
