@@ -46,7 +46,7 @@ export default function RegisterScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.content}>
-        <View style={styles.headerBox}><Text style={styles.title}>Join LeeStyle 👕</Text></View>
+        <View style={styles.headerBox}><Text style={styles.title}>Join LeeStyle </Text></View>
         <View style={styles.form}>
           <View style={styles.inputWrapper}><Ionicons name="person-outline" size={20} color="#7f8c8d" style={styles.icon} /><TextInput style={styles.input} placeholder="Username" value={fullName} onChangeText={setFullName} /></View>
           <View style={styles.inputWrapper}><Ionicons name="mail-outline" size={20} color="#7f8c8d" style={styles.icon} /><TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" /></View>
