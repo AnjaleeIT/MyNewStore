@@ -15,7 +15,7 @@ export default function TabLayout() {
     
     const checkUserRole = async () => {
       try {
-        // getUser වෙනුවට getSession භාවිතා කිරීමෙන් "Lock broken" error එක වළක්වා ගත හැක
+        
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user && isMounted) {
@@ -40,7 +40,7 @@ export default function TabLayout() {
     return () => { isMounted = false; };
   }, []);
 
-  // දත්ත ලැබෙන තෙක් මුකුත් නොපෙන්වීම (Refresh වීම සහ Error වළක්වා ගැනීමට)
+
   if (loading) return null;
 
   return (
@@ -80,7 +80,7 @@ export default function TabLayout() {
         }} 
       />
       
-      {/* 3. Admin Tab - href එක මෙලෙස සැකසීමෙන් පේජ් එක මාරු වීම නිවැරදි වේ */}
+     
       <Tabs.Screen 
         name="admin-dashboard" 
         options={{ 
@@ -117,7 +117,7 @@ export default function TabLayout() {
         }} 
       />
 
-      {/* අමතර පේජ් Tab bar එකෙන් සැඟවීම */}
+      
       <Tabs.Screen name="settings" options={{ href: null }} />
       <Tabs.Screen name="personal-info" options={{ href: null }} />
       <Tabs.Screen name="shipping-address" options={{ href: null }} />
