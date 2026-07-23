@@ -20,7 +20,7 @@ export default function LoginScreen() {
     }
     setLoading(true);
     try {
-      // 1. Username එක හරහා Profile එක ගන්නවා
+     
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('email, role')
@@ -31,7 +31,7 @@ export default function LoginScreen() {
         throw new Error("User not found in database.");
       }
 
-      // 2. Auth Login එක කරනවා
+      //  Auth Login 
       const { error } = await supabase.auth.signInWithPassword({ 
         email: profile.email, 
         password: password 
@@ -39,7 +39,7 @@ export default function LoginScreen() {
       
       if (error) throw error;
 
-      // 3. Role එක අනුව Page එකට යවනවා
+   
       if (profile.role === 'admin') {
         router.replace('/admin-dashboard');
       } else {
