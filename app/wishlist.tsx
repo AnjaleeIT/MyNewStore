@@ -30,7 +30,7 @@ export default function WishlistScreen() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // 1. 'wishlist' ටේබල් එකෙන් මේ යූසර් ඇඩ් කරපු product_ids ටික ගන්නවා
+      //  'wishlist' 
       const { data: wishlistData, error: wishlistError } = await supabase
         .from('wishlist')
         .select('product_id')
@@ -41,7 +41,7 @@ export default function WishlistScreen() {
       if (wishlistData && wishlistData.length > 0) {
         const productIds = wishlistData.map(item => item.product_id);
 
-        // 2. ඒ IDs වලට අදාළ සම්පූර්ණ දත්ත 'products' ටේබල් එකෙන් බාගන්නවා
+       
         const { data: productData, error: productError } = await supabase
           .from('products')
           .select('*')
