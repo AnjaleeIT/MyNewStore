@@ -9,7 +9,7 @@ export default function SuccessScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  // --- PDF එක සාදා Download/Share කරන Function එක ---
+  
   const handleDownloadInvoice = async () => {
     const htmlContent = `
       <html>
@@ -72,8 +72,7 @@ export default function SuccessScreen() {
         <TouchableOpacity style={styles.homeBtn} onPress={() => router.replace('/')}>
           <Text style={styles.homeBtnText}>Continue Shopping</Text>
         </TouchableOpacity>
-        
-        {/* මෙතන handleDownloadInvoice function එක සම්බන්ධ කළා */}
+      
         <TouchableOpacity style={styles.printBtn} onPress={handleDownloadInvoice}>
           <Ionicons name="download-outline" size={20} color="#5209e3" />
           <Text style={styles.printBtnText}>Download Invoice (PDF)</Text>
