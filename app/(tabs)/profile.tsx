@@ -58,7 +58,7 @@ export default function ProfileScreen() {
         <Text style={styles.nameText}>{profile?.full_name || 'User'}</Text>
         <Text style={styles.subText}>{profile?.phone_number || 'No Phone Number'}</Text>
         
-        {/* Admin Tag එකක් පෙන්වීමට (Optional) */}
+       
         {profile?.role === 'admin' && (
           <View style={styles.adminBadge}>
             <Text style={styles.adminBadgeText}>ADMIN ACCOUNT</Text>
@@ -67,7 +67,7 @@ export default function ProfileScreen() {
       </View>
 
       <View style={styles.menuBox}>
-        {/* --- මෙන්න විශේෂ කොටස: Admin කෙනෙක් නම් Dashboard Button එක පෙන්වයි --- */}
+        
         {profile?.role === 'admin' && (
           <MenuItem 
             title="Admin Dashboard" 
