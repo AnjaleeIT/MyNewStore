@@ -68,7 +68,7 @@ export default function AdminInventory() {
           style: "destructive", 
           onPress: async () => {
             try {
-              // ඉතා වැදගත්: String() භාවිතයෙන් UUID එක නිවැරදිව පෑහීම
+              
               const { error } = await supabase
                 .from('products')
                 .delete()
