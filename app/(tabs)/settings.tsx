@@ -52,7 +52,7 @@ export default function SettingsScreen() {
     }, [])
   );
 
-  // 📥 Notifications Database එකෙන් ලෝඩ් කරගැනීම
+  //  Notifications Database 
   const fetchInitialData = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -75,7 +75,7 @@ export default function SettingsScreen() {
     }
   };
 
-  // 🔔 Real-time නොටිෆිකේෂන් Listener
+  // 🔔 Real-time notifi Listener
   useEffect(() => {
     let channel: any;
 
@@ -218,15 +218,14 @@ export default function SettingsScreen() {
   };
 
   const handleLogout = () => {
-    setLogoutModalVisible(true); // Custom Warning Popup එක ඕපන් කරනවා
+    setLogoutModalVisible(true); 
   };
 
   const confirmLogout = async () => {
     try {
-      setLogoutModalVisible(false); // Custom Popup එක වහනවා
-      setModalVisible(false);       // Notifications Modal එකත් වහනවා
-      
-      await supabase.auth.signOut(); // සෙෂන් එක ක්ලියර් කරනවා
+      setLogoutModalVisible(false); 
+      setModalVisible(false);       // Notifications Modal 
+      await supabase.auth.signOut(); 
       
       setTimeout(() => {
         router.replace('/login' as any);
@@ -260,7 +259,7 @@ export default function SettingsScreen() {
             <Image 
               source={{ uri: profile?.avatar_url || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} 
               style={styles.avatar} 
-              resizeMode="cover" // 💡 FIXED: resizeMode moved directly to prop
+              resizeMode="cover" //  resizeMode moved directly to prop
             />
             <TouchableOpacity style={styles.cameraBadge} onPress={pickAndUploadImage} disabled={uploading} activeOpacity={0.8}>
               {uploading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Ionicons name="camera" size={15} color="#FFFFFF" />}

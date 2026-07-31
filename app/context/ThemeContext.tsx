@@ -14,7 +14,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// මේක අනිවාර්යයෙන්ම තියෙන්න ඕනේ
+
 export default ThemeProvider;
 
 export const useTheme = () => useContext(ThemeContext);

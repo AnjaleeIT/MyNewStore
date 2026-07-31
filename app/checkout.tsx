@@ -25,7 +25,7 @@ export default function CheckoutScreen() {
   const [address, setAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('card');
   
-  // 💡 NEW: කාඩ් විස්තර සඳහා නව States
+  // 💡 NEW: States
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
   const [cardCVV, setCardCVV] = useState('');
@@ -71,7 +71,7 @@ export default function CheckoutScreen() {
       return;
     }
 
-    // 💡 Card එක තෝරාගෙන කාඩ් විස්තර හිස්ව තිබේ නම් Validation එකක් දීම
+   
     if (paymentMethod === 'card') {
       if (!cardNumber.trim() || !cardExpiry.trim() || !cardCVV.trim()) {
         Alert.alert("Card Details Required", "Please fill in all your credit/debit card information.");
@@ -158,7 +158,7 @@ export default function CheckoutScreen() {
               <Text style={[styles.methodText, paymentMethod === 'card' && styles.activeMethodText]}>Credit / Debit Card</Text>
             </TouchableOpacity>
             
-            {/* 💡 NEW: Card එක තෝරාගත් විට පමණක් පෙන්වන පට්ට Clean Card Inputs ටික */}
+           
             {paymentMethod === 'card' && (
               <View style={styles.cardDetailsContainer}>
                 <Text style={styles.inputLabel}>Card Number</Text>
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   methodText: { marginLeft: 12, fontWeight: '600', color: '#64748B', fontSize: 14 },
   activeMethodText: { color: '#0F172A', fontWeight: '700' },
   
-  // 💡 NEW: CARD DETAILS CONTAINER STYLES
+  //  NEW: CARD DETAILS CONTAINER STYLES
   cardDetailsContainer: { backgroundColor: '#F8FAFC', padding: 14, borderRadius: 18, marginHorizontal: 10, marginBottom: 10, borderWidth: 1, borderColor: '#E2E8F0' },
   cardRowInline: { flexDirection: 'row', justifyContent: 'space-between' },
 

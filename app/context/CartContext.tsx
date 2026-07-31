@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// 1. Types Define කිරීම
+
 interface CartItem {
   id: string;
   name: string;
@@ -13,7 +13,7 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (product: any) => void;
   removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void; // මෙතන 'amount' වෙනුවට 'quantity' ලෙස සිතන්න
+  updateQuantity: (id: string, quantity: number) => void; 
   totalPrice: number;
   clearCart: () => void;
 }
@@ -23,7 +23,6 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // භාණ්ඩයක් Cart එකට එකතු කිරීම
   const addToCart = (product: any) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
@@ -40,11 +39,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // නිවැරදි කළ updateQuantity Function එක
+  
   const updateQuantity = (id: string, newQuantity: number) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
-        // මෙතන එකතු කරන්නේ නැතිව, කෙලින්ම අලුත් අගය (newQuantity) ලබා දෙනවා
+        
         item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
       )
     );

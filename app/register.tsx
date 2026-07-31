@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, 
   SafeAreaView, ActivityIndicator, StatusBar, KeyboardAvoidingView, Platform,
@@ -7,7 +7,6 @@ import {
 import { supabase } from '../supabaseConfig';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default function RegisterScreen() {
   const [fullName, setFullName] = useState('');
@@ -16,52 +15,53 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
 
   useEffect(() => {
     Animated.parallel([
-      Animated.timing(fadeAnim, { toValue: 1, duration: 1000, useNativeDriver: true }),
-      Animated.timing(slideAnim, { toValue: 0, duration: 800, useNativeDriver: true })
+      Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: 0, duration: 600, useNativeDriver: true })
     ]).start();
-  }, []);
+  }, [fadeAnim, slideAnim]);
+
+  const showAlert = (title: string, message: string) => {
+    if (Platform.OS === 'web') {
+      alert(`${title}: ${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
 
   const handleRegister = async () => {
     if (!fullName || !email || !password) {
-      Alert.alert("Input Error", "Please fill in all fields.");
+      showAlert("Error", "Please fill in all fields.");
       return;
     }
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) { 
-        Alert.alert("Registration Failed", error.message); 
-        setLoading(false); 
-        return; 
-      }
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: email.trim(),
+        password: password,
+      });
+
+      if (signUpError) throw signUpError;
 
       if (data.user) {
-        const userRole = fullName.toLowerCase().includes('admin') ? 'admin' : 'user';
         const { error: profileError } = await supabase
           .from('profiles')
-          .insert([{ 
-            id: data.user.id, 
-            full_name: fullName.trim(), 
-            email: email.trim().toLowerCase(), 
-            role: userRole 
-          }]);
+          .insert([
+            { id: data.user.id, full_name: fullName.trim(), email: email.trim(), role: 'user' }
+          ]);
 
-        if (profileError) {
-          Alert.alert("Profile Error", profileError.message);
-        } else {
-          Alert.alert("Success", "Account created successfully!");
-          router.replace('/login');
-        }
+        if (profileError) throw profileError;
+
+        showAlert("Success", "Account created successfully!");
+        router.replace('/login');
       }
     } catch (err: any) {
-      Alert.alert("Error", "යම් දෝෂයක් සිදු වී ඇත.");
+      showAlert("Registration Failed", err.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -74,198 +74,158 @@ export default function RegisterScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
-
-      {/* 🌌 Top Premium Dark Shape */}
-      <LinearGradient
-        colors={['#0f172a', '#1e3a8a']}
-        style={styles.topShape}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
-
+      <StatusBar barStyle="dark-content" />
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
         style={styles.content}
       >
         <Animated.View style={[styles.animatedContainer, animatedInputStyle]}>
-          
-          {/* 🌟 Highlighted Brand Header */}
-          <View style={styles.brandHeader}>
-            <Text style={styles.brandName}>LeeStyle</Text>
-            <View style={styles.brandBadge}>
-              <Text style={styles.brandBadgeText}>PREMIUM STORE</Text>
-            </View>
+          <View style={styles.headerBox}>
+            <Text style={styles.title}>Join LeeStyle</Text>
+            <Text style={styles.subtitle}>Create an account to get started</Text>
           </View>
 
-          {/* 🏷️ Create Account Text Section */}
-          <View style={styles.titleSection}>
-            <Text style={styles.loginTitle}>Get Started</Text>
-            <Text style={styles.loginSubtitle}>Create a new account to join us</Text>
-          </View>
-
-          {/* 🗂️ Combined Input Card */}
-          <View style={styles.inputCard}>
-            <View style={styles.inputsSection}>
-              {/* Username Input */}
-              <View style={styles.inputRow}>
-                <Ionicons name="person-outline" size={20} color="#94a3b8" style={styles.icon} />
-                <TextInput 
-                  style={styles.input} 
-                  placeholder="Username" 
-                  placeholderTextColor="#94a3b8"
-                  value={fullName} 
-                  onChangeText={setFullName} 
-                />
-              </View>
-
-              <View style={styles.separator} />
-
-              {/* Email Input */}
-              <View style={styles.inputRow}>
-                <Ionicons name="mail-outline" size={20} color="#94a3b8" style={styles.icon} />
-                <TextInput 
-                  style={styles.input} 
-                  placeholder="Email" 
-                  placeholderTextColor="#94a3b8"
-                  value={email} 
-                  onChangeText={setEmail} 
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                />
-              </View>
-
-              <View style={styles.separator} />
-
-              {/* Password Input */}
-              <View style={styles.inputRow}>
-                <Ionicons name="lock-closed-outline" size={20} color="#94a3b8" style={styles.icon} />
-                <TextInput 
-                  style={styles.input} 
-                  placeholder="Password" 
-                  placeholderTextColor="#94a3b8"
-                  value={password} 
-                  onChangeText={setPassword} 
-                  secureTextEntry 
-                />
-              </View>
+          <View style={styles.form}>
+            {/* Username Input */}
+            <View style={styles.inputWrapper}>
+              <Ionicons name="person-outline" size={20} color="#7f8c8d" style={styles.icon} />
+              <TextInput 
+                style={styles.input} 
+                placeholder="Username" 
+                placeholderTextColor="#7f8c8d"
+                value={fullName} 
+                onChangeText={setFullName}
+                autoCapitalize="none"
+              />
             </View>
 
-            {/* 🟢 Circular Submit Button */}
+            {/* Email Input */}
+            <View style={styles.inputWrapper}>
+              <Ionicons name="mail-outline" size={20} color="#7f8c8d" style={styles.icon} />
+              <TextInput 
+                style={styles.input} 
+                placeholder="Email" 
+                placeholderTextColor="#7f8c8d"
+                value={email} 
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
+
+            {/* Password Input */}
+            <View style={styles.inputWrapper}>
+              <Ionicons name="lock-closed-outline" size={20} color="#7f8c8d" style={styles.icon} />
+              <TextInput 
+                style={styles.input} 
+                placeholder="Password" 
+                placeholderTextColor="#7f8c8d"
+                value={password} 
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
+
+            {/* Submit Button */}
             <TouchableOpacity 
-              style={styles.submitCircle} 
+              style={styles.button} 
               onPress={handleRegister} 
               disabled={loading}
               activeOpacity={0.8}
             >
-              <LinearGradient
-                colors={['#06b6d4', '#0284c7']}
-                style={styles.circleGradient}
-              >
-                {loading ? (
-                  <ActivityIndicator color="#fff" size="small" />
-                ) : (
-                  <Ionicons name="arrow-forward" size={24} color="#ffffff" />
-                )}
-              </LinearGradient>
+              {loading ? (
+                <ActivityIndicator color="#ffffff" size="small" />
+              ) : (
+                <Text style={styles.buttonText}>Register</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push('/login')} style={styles.linkButton}>
+              <Text style={styles.linkText}>Already have an account? <Text style={styles.linkBold}>Log In</Text></Text>
             </TouchableOpacity>
           </View>
-
-          {/* 🔗 Back to Login Link */}
-          <View style={styles.linksRow}>
-            <TouchableOpacity onPress={() => router.replace('/login')}>
-              <Text style={styles.loginLinkText}>
-                Already have an account? <Text style={styles.loginLinkHighlight}>Sign In</Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
-
         </Animated.View>
       </KeyboardAvoidingView>
-
-      {/* 🌊 Bottom Wave */}
-      <LinearGradient
-        colors={['#0ea5e9', '#2563eb']}
-        style={styles.bottomShape}
-      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8fafc', position: 'relative' },
-  content: { flex: 1, paddingHorizontal: 30, justifyContent: 'center', zIndex: 10 },
-  animatedContainer: { width: '100%' },
-  
-  topShape: {
-    position: 'absolute', top: -70, left: -40, right: -40, height: 380,
-    borderBottomLeftRadius: 200, borderBottomRightRadius: 160, transform: [{ rotate: '-6deg' }]
+  container: {
+    flex: 1,
+    backgroundColor: '#f8fafc',
   },
-  bottomShape: {
-    position: 'absolute', bottom: -140, left: -50, right: -50, height: 260,
-    borderTopLeftRadius: 200, borderTopRightRadius: 250, transform: [{ rotate: '4deg' }]
+  content: {
+    flex: 1,
+    paddingHorizontal: 24,
+    justifyContent: 'center',
   },
-
-  brandHeader: { 
-    alignItems: 'center', 
-    marginTop: -40, 
-    marginBottom: 40 
+  animatedContainer: {
+    width: '100%',
   },
-  brandName: { 
-    fontSize: 52, 
-    fontWeight: '900', 
-    color: '#ffffff', 
-    letterSpacing: 2,
-    textShadowColor: 'rgba(6, 182, 212, 0.4)',
-    textShadowOffset: { width: 0, height: 4 },
-    textShadowRadius: 10
+  headerBox: {
+    marginBottom: 30,
+    alignItems: 'center',
   },
-  brandBadge: {
-    backgroundColor: 'rgba(56, 189, 248, 0.15)', 
-    paddingHorizontal: 14,
-    paddingVertical: 4,
+  title: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#0f172a',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 6,
+  },
+  form: {
+    backgroundColor: '#ffffff',
     borderRadius: 20,
-    marginTop: 5,
-    borderWidth: 1,
-    borderColor: 'rgba(56, 189, 248, 0.3)'
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 4,
   },
-  brandBadgeText: { 
-    fontSize: 11, 
-    fontWeight: '800', 
-    color: '#38bdf8', 
-    letterSpacing: 4 
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginBottom: 16,
   },
-
-  // ✨ "Get Started" Title එක සහ හිඩැස් ටිකක් චූටි කළා
-  titleSection: { marginBottom: 20, paddingLeft: 6 },
-  loginTitle: { fontSize: 16, fontWeight: '800', color: '#1e293b' }, // 👈 26 සිට 22 ට අඩු කළා
-  loginSubtitle: { fontSize: 13, color: '#64748b', marginTop: 3 }, // 👈 ටිකක් clean කළා
-
-  inputCard: {
-    width: '100%', backgroundColor: '#ffffff', flexDirection: 'row', alignItems: 'center',
-    borderRadius: 24, paddingLeft: 22, paddingRight: 10, paddingVertical: 12,
-    shadowColor: '#0f172a', shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.06, shadowRadius: 20, elevation: 6,
-    position: 'relative',
-    borderWidth: 1, borderColor: '#f1f5f9'
+  icon: {
+    marginRight: 10,
   },
-  inputsSection: { flex: 1, paddingRight: 45 }, 
-  inputRow: { flexDirection: 'row', alignItems: 'center', height: 58 },
-  icon: { marginRight: 14 },
-  input: { flex: 1, fontSize: 16, color: '#0f172a', fontWeight: '500' },
-  separator: { height: 1, backgroundColor: '#f1f5f9', width: '100%' },
-
-  submitCircle: {
-    position: 'absolute', right: -16, width: 60, height: 60, borderRadius: 30,
-    shadowColor: '#06b6d4', shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3, shadowRadius: 10, elevation: 5
+  input: {
+    flex: 1,
+    fontSize: 15,
+    color: '#1e293b',
   },
-  circleGradient: { flex: 1, borderRadius: 30, justifyContent: 'center', alignItems: 'center' },
-
-  linksRow: { 
-    flexDirection: 'row', justifyContent: 'center', alignItems: 'center', 
-    marginTop: 25 
+  button: {
+    backgroundColor: '#0284c7',
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 10,
   },
-  loginLinkText: { color: '#94a3b8', fontSize: 15, fontWeight: '500' },
-  loginLinkHighlight: { color: '#0284c7', fontWeight: '700' }
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  linkButton: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#64748b',
+  },
+  linkBold: {
+    color: '#0284c7',
+    fontWeight: '700',
+  }
 });

@@ -19,20 +19,20 @@ export default function ShippingAddressScreen() {
   const router = useRouter();
   
   // States
-  const [address, setAddress] = useState(''); // DB එකෙන් එන ප්‍රධාන ඇඩ්‍රස් එක
+  const [address, setAddress] = useState(''); 
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   
   // UI Control States
-  const [isEditing, setIsEditing] = useState(false); // Edit Mode එක On/Off කිරීමට
-  const [isAddingNew, setIsAddingNew] = useState(false); // New Address Mode එක On/Off කිරීමට
-  const [newAddress, setNewAddress] = useState(''); // අලුතින්ම දාන ඇඩ්‍රස් එක
+  const [isEditing, setIsEditing] = useState(false); // Edit Mode On/Off 
+  const [isAddingNew, setIsAddingNew] = useState(false); 
+  const [newAddress, setNewAddress] = useState(''); 
 
   useEffect(() => {
     fetchAddress();
   }, []);
 
-  // 📥 Supabase Profiles එකෙන් රෙජිස්ටර් වෙද්දී දීපු Address එක ලෝඩ් කිරීම
+  //  Supabase Profiles 
   const fetchAddress = async () => {
     try {
       setLoading(true);
@@ -55,7 +55,7 @@ export default function ShippingAddressScreen() {
     }
   };
 
-  // 💾 1. පවතින Address එක වෙනස් කර (Edit) DB එකට සේව් කිරීම
+ 
   const handleUpdateAddress = async () => {
     if (!address.trim()) {
       Alert.alert("Required Field", "Address cannot be empty.");
@@ -74,8 +74,8 @@ export default function ShippingAddressScreen() {
 
       if (error) throw error;
       
-      Alert.alert("Updated 🎉", "Shipping address updated successfully!");
-      setIsEditing(false); // Edit මොඩ් එක ඕෆ් කිරීම
+      Alert.alert("Updated ", "Shipping address updated successfully!");
+      setIsEditing(false);
     } catch (err: any) {
       Alert.alert("Error", err.message || "Could not update address.");
     } finally {
@@ -83,7 +83,7 @@ export default function ShippingAddressScreen() {
     }
   };
 
-  // 💾 2. අලුත්ම Address එකක් Add කර සේව් කිරීම
+
   const handleAddNewAddress = async () => {
     if (!newAddress.trim()) {
       Alert.alert("Required Field", "Please enter the new address.");
@@ -95,8 +95,7 @@ export default function ShippingAddressScreen() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // 💡 මෙතනදී අපි ප්‍රධාන ඇඩ්‍රස් එක වෙනුවට අලුත් එකක් දාන නිසා, දැනට Profiles එකේම ඇඩ්‍රස් එක අප්ඩේට් කරනවා. 
-      // (ඔයාට වෙනම 'addresses' කියලා ටේබල් එකක් තියේ නම් එතනට Insert කරන්නත් පුළුවන්)
+     
       const { error } = await supabase
         .from('profiles')
         .update({ address: newAddress.trim() })
@@ -104,7 +103,7 @@ export default function ShippingAddressScreen() {
 
       if (error) throw error;
       
-      setAddress(newAddress.trim()); // පේජ් එකේ පේන ඇඩ්‍රස් එක අලුත් එකට මාරු කිරීම
+      setAddress(newAddress.trim()); 
       Alert.alert("Added 🎉", "New shipping address added successfully!");
       setNewAddress('');
       setIsAddingNew(false);
@@ -156,7 +155,7 @@ export default function ShippingAddressScreen() {
             </View>
           )}
 
-          {/* 📝 EDIT ADDRESS MODE INPUT (මතු වෙන්නේ Edit ඔබපු විට පමණි) */}
+          {/* 📝 EDIT ADDRESS MODE INPUT  */}
           {isEditing && (
             <View style={styles.editFormCard}>
               <Text style={styles.sectionSubTitle}>Modify Default Address</Text>
@@ -181,7 +180,7 @@ export default function ShippingAddressScreen() {
             </View>
           )}
 
-          {/* ➕ ADD NEW ADDRESS INPUT BOX (මතු වෙන්නේ Add New Address ඔබපු විට පමණි) */}
+          {/* ➕ ADD NEW ADDRESS INPUT BOX ) */}
           {isAddingNew && (
             <View style={styles.editFormCard}>
               <Text style={styles.sectionSubTitle}>Add New Shipping Address</Text>
@@ -206,7 +205,7 @@ export default function ShippingAddressScreen() {
             </View>
           )}
 
-          {/* ➕ ADD NEW ADDRESS TRIGGER BUTTON (ප්‍රධාන බටන් එක) */}
+          {/*  ADD NEW ADDRESS TRIGGER BUTTON ) */}
           {!isAddingNew && !isEditing && (
             <TouchableOpacity 
               style={styles.addNewBtn} 

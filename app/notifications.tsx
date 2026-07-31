@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { 
   View, Text, FlatList, StyleSheet, SafeAreaView, 
   StatusBar, TouchableOpacity, ActivityIndicator, RefreshControl, Modal, Dimensions,
-  ScrollView, Platform // 💡 Fix 1: ScrollView සහ Platform මෙතැනින් නිවැරදිව Import කර ඇත
+  ScrollView, Platform 
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -130,7 +130,7 @@ export default function UserNotification() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>
         <View style={styles.headerIconBox}>
-          {/* 💡 Fix 2: Ionicons සඳහා නිවැරදි නම 'notifications-outline' ලෙස වෙනස් කරන ලදී */}
+         
           <Ionicons name="notifications-outline" size={19} color={COLORS.primary} />
         </View>
       </View>

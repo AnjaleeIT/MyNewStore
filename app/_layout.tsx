@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
-import { supabase } from '../supabaseConfig'; // පරණ code එකේ තිබූ පරිදි
+import { supabase } from '../supabaseConfig'; 
 
 export default function RootLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    // Session එක පරීක්ෂා කිරීම
+    // check session
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
@@ -18,7 +18,7 @@ export default function RootLayout() {
 
     checkUser();
 
-    // Auth තත්ත්වය වෙනස් වන විට (Login/Logout) ක්‍රියාත්මක වේ
+    // (Login/Logout) 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         router.replace('/login');

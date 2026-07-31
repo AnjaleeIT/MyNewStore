@@ -23,7 +23,7 @@ export default function HelpSupportScreen() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
-  // ඇප් එක ලෝඩ් වෙද්දීම දැනට ඉන්න යූසර්ව අරන් ලොග් එකක් දානවා
+ 
   useEffect(() => {
     async function checkUser() {
       const { data: { session }, error } = await supabase.auth.getSession();
@@ -63,7 +63,7 @@ export default function HelpSupportScreen() {
 
     setLoading(true);
     try {
-      // යූසර් ලොග් වෙලා නැත්නම් Anonymous විදිහට සේව් කරනවා (Crash වෙන්නේ නැති වෙන්න)
+     
       const userId = currentUser?.id || null;
       const userEmail = currentUser?.email || 'anonymous@leestyle.com';
 
@@ -81,14 +81,14 @@ export default function HelpSupportScreen() {
         .select();
 
       if (error) {
-        // 🚨 Supabase එකෙන් දෙන සැබෑ වැරැද්ද කෙලින්ම Alert එකේ පෙන්වන්න සැලැස්වීම
+       
         Alert.alert("Supabase Database Error", `Code: ${error.code}\nMessage: ${error.message}`);
         console.error("Database Error:", error);
         setLoading(false);
         return;
       }
 
-      Alert.alert("Success 🎉", "Your ticket has been submitted successfully!");
+      Alert.alert("Success ", "Your ticket has been submitted successfully!");
       setSubject('');
       setMessage('');
 

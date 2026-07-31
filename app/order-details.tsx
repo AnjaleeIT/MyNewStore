@@ -38,7 +38,7 @@ export default function OrderDetails() {
     if (!error) { Alert.alert("Success", `Status updated to ${status}`); fetchOrder(); }
   };
 
-  // Status වර්ණ ලබාගන්නා function එක
+
   const getStatusColor = (status: string) => {
     if (status === 'Pending') return COLORS.warning;
     if (status === 'Shipped') return COLORS.primary;
@@ -46,7 +46,7 @@ export default function OrderDetails() {
     return COLORS.textSec;
   };
 
-  // Tracking steps ගණනය කරන function එක
+ 
   const getStatusSteps = () => {
     const status = order?.status;
     const steps = ['Pending', 'Shipped', 'Delivered'];
@@ -76,7 +76,7 @@ export default function OrderDetails() {
           <Text style={styles.heroLabel}>Total Payment</Text>
           <Text style={styles.heroValue}>Rs. {Number(order.total_amount).toLocaleString()}</Text>
           
-          {/* Status Badge එක පාට වෙනස් වන පරිදි */}
+        
           <View style={[styles.statusBadge, { backgroundColor: getStatusColor(order.status) + '20' }]}>
             <Text style={{ color: getStatusColor(order.status), fontWeight: '700' }}>
               {order.status}

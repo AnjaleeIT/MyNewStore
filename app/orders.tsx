@@ -15,35 +15,35 @@ export default function MyOrdersScreen() {
   useEffect(() => {
     fetchOrders();
 
-    // Real-time Notification සහ Auto-refresh සඳහා Setup එක
+  
     let orderChannel: any;
 
     const setupRealtimeSubscription = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // 'orders' ටේබල් එකේ සිදුවන වෙනස්කම් ලයිව්ම බලාගන්න චැනල් එකක් හදනවා
+      // 'orders' 
       orderChannel = supabase
         .channel('user-orders-status')
         .on(
           'postgres_changes',
           {
-            event: 'UPDATE', // ඇඩ්මින් Status එක Update කරද්දී විතරක්
+            event: 'UPDATE', 
             schema: 'public',
             table: 'orders',
-            filter: `user_id=eq.${user.id}` // ඉතා වැදගත්: මේ ලොග් වී ඉන්න යූසර්ගේ ඕඩර්ස් විතරයි බලන්නේ
+            filter: `user_id=eq.${user.id}` 
           },
           (payload) => {
             const updatedOrder = payload.new;
 
-            // 1. UI එකේ පෙනෙන ලිස්ට් එක ඉබේම අලුත් කරනවා (No need to manual refresh)
+            // (No need to manual refresh)
             setOrders((prevOrders) =>
               prevOrders.map((order) =>
                 order.id === updatedOrder.id ? updatedOrder : order
               )
             );
 
-            // 2. යූසර්ට Status එක අනුව Notification Alert එකක් පෙන්වනවා
+            
             if (updatedOrder.status === 'Delivered') {
               Alert.alert(
                 "🚚 Order Delivered!",
@@ -62,7 +62,7 @@ export default function MyOrdersScreen() {
 
     setupRealtimeSubscription();
 
-    // පේජ් එකෙන් අයින් වෙද්දී Subscription එක අයින් කරනවා (Memory leaks මගහරවා ගන්න)
+    
     return () => {
       if (orderChannel) {
         supabase.removeChannel(orderChannel);
@@ -94,7 +94,7 @@ export default function MyOrdersScreen() {
     <TouchableOpacity style={styles.orderCard} activeOpacity={0.7}>
       <View style={styles.orderTop}>
         <View style={styles.idBadge}>
-          {/* ID එක UUID එකක් නම් slice කරලා ලස්සනට පෙන්වනවා */}
+         
           <Text style={styles.idText}>#{item.id.toString().slice(0, 8).toUpperCase()}</Text>
         </View>
         <View style={[

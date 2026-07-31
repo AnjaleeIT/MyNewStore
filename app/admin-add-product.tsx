@@ -63,17 +63,17 @@ export default function AdminAddProduct() {
 
       if (error) throw error;
 
-      // සාර්ථක වූ විට පෙන්වන පණිවිඩය (Notification)
+      // Succsess (Notification)
       Alert.alert(
         "Success ✅", 
-        "භාණ්ඩය සාර්ථකව Store එකට එකතු කළා!", 
+        "Item is Successfully Added ti stor", 
         [
           { 
-            text: "නියමයි", 
+            text: "great", 
             onPress: () => {
-              // Form එක reset කිරීම
+              // Form reset 
               setForm({ name: '', price: '', old_price: '', category: '', description: '', img: '' });
-              // නැවත Dashboard එකට යාම
+              // redirect to dashboard
               router.replace('/admin-dashboard');
             } 
           }
@@ -81,7 +81,7 @@ export default function AdminAddProduct() {
       );
 
     } catch (error: any) {
-      Alert.alert("Error ❌", error.message || "දත්ත ඇතුළත් කිරීමේදී ගැටලුවක් ඇති විය.");
+      Alert.alert("Error ❌", error.message || "Error.");
     } finally {
       setLoading(false);
     }

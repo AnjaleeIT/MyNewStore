@@ -39,7 +39,7 @@ export default function OrderHistory() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      // 💡 .order('id', { ascending: false }) නිසා අලුත්ම ඕඩර්ස් උඩටම එනවා
+      // 💡 .order('id', { ascending: false })
       const { data } = await supabase.from('orders').select('*').order('id', { ascending: false });
       setOrders(data || []);
     } catch (err) {
@@ -80,7 +80,7 @@ export default function OrderHistory() {
           renderItem={({ item }) => {
             const isDelivered = item.status?.toLowerCase() === 'delivered';
             
-            // 💡 BUG FIX: item.id එක Number එකක් වුණත් String එකක් වුණත් ක්‍රැෂ් නොවී ආරක්ෂිතව ID එක ගැනීම
+           
             const safeId = item.id ? String(item.id).toUpperCase() : 'UNKNOWN';
             
             return (
@@ -95,7 +95,7 @@ export default function OrderHistory() {
                   </View>
                   
                   <View style={styles.infoBox}>
-                    {/* 💡 කෙටි පිළිවෙලකට පෙන්වීම */}
+                   
                     <Text style={styles.orderId}>Order #{safeId}</Text>
                     <Text style={styles.date}>
                       {item.created_at 

@@ -51,24 +51,24 @@ export default function AdminTicketsScreen() {
     }
   };
 
-  // 🔄 Filter එක වෙනස් වන විට ඩේටා රී-ෆෙච් කිරීම
+  // 🔄 Filter
   useEffect(() => {
     fetchTickets();
   }, [filter]);
 
-  // ⚡ Real-time Subscription (එක පාරක් පමණක් ක්‍රියාත්මක වේ - Memory leaks වැළැක්වීමට)
+  // ⚡ Real-time Subscription 
   useEffect(() => {
     const ticketChannel = supabase
       .channel('realtime-admin-tickets')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'support_tickets' }, () => {
-        fetchTickets(); // ඩේටාබේස් එකේ ඕනෑම වෙනසකදී ලයිව් අප්ඩේට් වේ
+        fetchTickets(); ේ
       })
       .subscribe();
 
     return () => {
       supabase.removeChannel(ticketChannel);
     };
-  }, [filter]); // Filter එක වෙනස් වෙද්දී නිවැරදි Scope එක තබා ගැනීමට
+  }, [filter]); 
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -88,11 +88,11 @@ export default function AdminTicketsScreen() {
 
       if (error) throw error;
 
-      // 2. 🔥 Local State එක සැනින් අප්ඩේට් කිරීම (බටන් එක වැඩ කරන්න ප්‍රධානම හේතුව)
+     
       setTickets((prevTickets) =>
         prevTickets.map((ticket) =>
           ticket.id === id ? { ...ticket, status: nextStatus } : ticket
-        ).filter((ticket) => filter === 'all' || ticket.status === filter) // ෆිල්ටර් එකට නොගැලපේ නම් ලිස්ට් එකෙන් අයින් කරයි
+        ).filter((ticket) => filter === 'all' || ticket.status === filter) 
       );
 
       Alert.alert(

@@ -17,7 +17,7 @@ import {
 import { supabase } from '../../supabaseConfig';
 
 const { width } = Dimensions.get('window');
-// දෙපැත්තෙන් පෑඩින්ග් අයින් කරලා කාඩ් එකකට නියම ඉඩ ප්‍රමාණය දීම
+
 const CARD_WIDTH = (width - 48) / 2; 
 
 interface Product {
@@ -63,11 +63,10 @@ export default function ExploreScreen() {
     return matchesCategory && matchesSearch;
   });
 
-  // 💡 FIX: දත්ත ටික වම් පැත්තෙයි දකුණු පැත්තෙයි Column දෙකට සමබරව බෙදා වෙන් කිරීම
+ 
   const leftColumnProducts = filteredProducts.filter((_, index) => index % 2 === 0);
   const rightColumnProducts = filteredProducts.filter((_, index) => index % 2 !== 0);
 
-  // කාඩ් එකක් රෙන්ඩර් කරන පොදු Component එක
   const renderProductCard = (item: Product) => (
     <TouchableOpacity
       key={item.id}
@@ -154,7 +153,7 @@ export default function ExploreScreen() {
           {loading ? (
             <ActivityIndicator size="small" color="#5F1BE9" style={{ marginTop: 40 }} />
           ) : (
-            /* 💡 FIX: පින්තූර දෙක දෙක ලස්සනට 50% ගානේ බෙදෙන ස්ටැක් එක */
+           
             <View style={styles.gridColumnsContainer}>
               {/* Left Side Column */}
               <View style={styles.gridColumn}>
@@ -204,16 +203,16 @@ const styles = StyleSheet.create({
   catLabel: { fontSize: 12, fontWeight: '700', color: '#64748B' },
   catLabelActive: { color: '#FFFFFF' },
 
-  // 💡 FIX: Column Layout එක සාර්ථක කරගත් අලුත් ස්ටයිල්ස්
+ 
   gridSection: { marginTop: 20, paddingHorizontal: 12 },
   gridColumnsContainer: { flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
   gridColumn: { flexDirection: 'column', width: '50%', paddingHorizontal: 4 },
   
   modernCard: {
-    width: '100%', // Column එකේ උපරිම පළල ගැනීම
+    width: '100%',
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    marginBottom: 12, // පල්ලෙහාට ලස්සන පරතරයක්
+    marginBottom: 12,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#F1F5F9',

@@ -49,7 +49,7 @@ export default function PaymentMethodsScreen() {
       if (!error && data && data.length > 0) {
         setCards(data);
       } else {
-        // Dummy Data - DB එකේ දැනට ඩේටා නැත්නම් පමණක් පෙන්වීමට
+       
         setCards([
           { id: '1', card_type: 'Visa Card', card_number: '•••• •••• •••• 4242', expiry: '12/28' }
         ]);
@@ -106,7 +106,7 @@ export default function PaymentMethodsScreen() {
           contentContainerStyle={{ padding: 16 }}
           ListFooterComponent={() => (
             <View>
-              {/* 💡 BUG FIX: 'as any' යොදා TypeScript Path Error එක සහමුලින්ම නිවැරදි කර ඇත */}
+             
               <TouchableOpacity 
                 style={styles.addNewBtn} 
                 onPress={() => router.push('/add-card' as any)} 
