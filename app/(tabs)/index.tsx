@@ -142,7 +142,7 @@ export default function HomeScreen() {
             style={styles.homeAvatar} 
           />
           <View style={styles.welcomeTextColumn}>
-            <Text style={styles.welcomeTitle}>Hello Imasha,</Text>
+            <Text style={styles.welcomeTitle}>Hello User,</Text>
             <Text style={styles.subTitleText}>Explore Collections</Text>
           </View>
         </TouchableOpacity>
