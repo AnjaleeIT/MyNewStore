@@ -1,7 +1,15 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://sgygbqahrvvarimebdsb.supabase.co'
-// මෙතනට ඔයාගේ පරණ ANON KEY එක (Publishable Key) දාන්න
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNneWdicWFocnZ2YXJpbWViZHNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTkxMjIsImV4cCI6MjA5MDYzNTEyMn0.HcsyhB_JWAoobPyENj6W3rjO4iHtYV-HT0xjlbf_pgA'
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || 'https://sgygbqahrvvarimebdsb.supabase.co';
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_JwCgPVqOEsBIN1SNnR_bwA_Hz-0bXcJ';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    lock: async (name, acquireTimeout, fn) => {
+      return await fn();
+    },
+  },
+});

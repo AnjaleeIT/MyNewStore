@@ -24,10 +24,10 @@ export default function LoginScreen() {
       Animated.timing(fadeAnim, { toValue: 1, duration: 1000, useNativeDriver: true }),
       Animated.timing(slideAnim, { toValue: 0, duration: 800, useNativeDriver: true })
     ]).start();
-  }, []);
+  }, [fadeAnim, slideAnim]);
 
   const handleLogin = async () => {
-    if (!fullName || !password) {
+    if (!fullName.trim() || !password) {
       Alert.alert("Error", "Please enter both Username and Password.");
       return;
     }
@@ -56,14 +56,13 @@ export default function LoginScreen() {
         router.replace('/(tabs)');
       }
 
-    } catch (err: any) { // 👈 catch (error: any) වෙනුවට standard type casting එක හැදුවා
-      Alert.alert("Login Failed", "Username හෝ Password වැරදියි.");
+    } catch (err: unknown) {
+      Alert.alert("Login Failed", "Username or Password is incorrect.");
     } finally {
       setLoading(false);
     }
   };
 
-  // 🪄 Animated styles ටික වෙනම variable එකකට ගත්තා TypeScript crash වෙන්නේ නැති වෙන්න
   const animatedInputStyle: StyleProp<ViewStyle> = {
     opacity: fadeAnim,
     transform: [{ translateY: slideAnim }]
@@ -73,7 +72,7 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
 
-      {/* 🌌 Top Premium Dark Shape */}
+      {/* Top Gradient Background */}
       <LinearGradient
         colors={['#0f172a', '#1e3a8a']}
         style={styles.topShape}
@@ -87,7 +86,7 @@ export default function LoginScreen() {
       >
         <Animated.View style={[styles.animatedContainer, animatedInputStyle]}>
           
-          {/* 🌟 Highly Highlighted Brand Header */}
+          {/* Brand Header */}
           <View style={styles.brandHeader}>
             <Text style={styles.brandName}>LeeStyle</Text>
             <View style={styles.brandBadge}>
@@ -95,13 +94,13 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          {/* 🏷️ Sign In Text Section */}
+          {/* Title Section */}
           <View style={styles.titleSection}>
             <Text style={styles.loginTitle}>Welcome Back</Text>
             <Text style={styles.loginSubtitle}>Sign in to continue shopping</Text>
           </View>
 
-          {/* 🗂️ Input Card */}
+          {/* Input Card */}
           <View style={styles.inputCard}>
             <View style={styles.inputsSection}>
               {/* Username Input */}
@@ -114,10 +113,10 @@ export default function LoginScreen() {
                   value={fullName} 
                   onChangeText={setFullName} 
                   autoCapitalize="none"
+                  autoCorrect={false}
                 />
               </View>
 
-              {/* Minimal Separator */}
               <View style={styles.separator} />
 
               {/* Password Input */}
@@ -130,11 +129,12 @@ export default function LoginScreen() {
                   value={password} 
                   onChangeText={setPassword} 
                   secureTextEntry 
+                  autoCapitalize="none"
                 />
               </View>
             </View>
 
-            {/* 🟢 Circular Submit Button */}
+            {/* Circular Submit Button inside layout */}
             <TouchableOpacity 
               style={styles.submitCircle} 
               onPress={handleLogin} 
@@ -154,7 +154,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* 🔗 Links Section */}
+          {/* Links Section */}
           <View style={styles.linksRow}>
             <TouchableOpacity onPress={() => router.push('/register')}>
               <Text style={styles.registerText}>Create Account</Text>
@@ -168,7 +168,7 @@ export default function LoginScreen() {
         </Animated.View>
       </KeyboardAvoidingView>
 
-      {/* 🌊 Bottom Wave */}
+      {/* Bottom Wave Background */}
       <LinearGradient
         colors={['#0ea5e9', '#2563eb']}
         style={styles.bottomShape}
@@ -178,8 +178,8 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8fafc', position: 'relative' },
-  content: { flex: 1, paddingHorizontal: 30, justifyContent: 'center', zIndex: 10 },
+  container: { flex: 1, backgroundColor: '#f8fafc' },
+  content: { flex: 1, paddingHorizontal: 24, justifyContent: 'center', zIndex: 10 },
   animatedContainer: { width: '100%' },
   
   topShape: {
@@ -193,11 +193,11 @@ const styles = StyleSheet.create({
 
   brandHeader: { 
     alignItems: 'center', 
-    marginTop: -80, 
-    marginBottom: 60 
+    marginTop: -40, 
+    marginBottom: 40 
   },
   brandName: { 
-    fontSize: 52, 
+    fontSize: 48, 
     fontWeight: '900', 
     color: '#ffffff', 
     letterSpacing: 2,
@@ -221,30 +221,29 @@ const styles = StyleSheet.create({
     letterSpacing: 4 
   },
 
-  titleSection: { marginBottom: 25, paddingLeft: 6 },
+  titleSection: { marginBottom: 20, paddingLeft: 6 },
   loginTitle: { fontSize: 26, fontWeight: '800', color: '#1e293b' },
   loginSubtitle: { fontSize: 14, color: '#64748b', marginTop: 4 },
 
   inputCard: {
     width: '100%', backgroundColor: '#ffffff', flexDirection: 'row', alignItems: 'center',
-    borderRadius: 24, paddingLeft: 22, paddingRight: 10, paddingVertical: 12,
+    borderRadius: 24, paddingLeft: 16, paddingRight: 12, paddingVertical: 10,
     shadowColor: '#0f172a', shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.06, shadowRadius: 20, elevation: 6,
-    position: 'relative',
+    shadowOpacity: 0.08, shadowRadius: 20, elevation: 6,
     borderWidth: 1, borderColor: '#f1f5f9'
   },
-  inputsSection: { flex: 1, paddingRight: 45 }, 
-  inputRow: { flexDirection: 'row', alignItems: 'center', height: 58 },
-  icon: { marginRight: 14 },
+  inputsSection: { flex: 1, marginRight: 12 }, 
+  inputRow: { flexDirection: 'row', alignItems: 'center', height: 50 },
+  icon: { marginRight: 10 },
   input: { flex: 1, fontSize: 16, color: '#0f172a', fontWeight: '500' },
   separator: { height: 1, backgroundColor: '#f1f5f9', width: '100%' },
 
   submitCircle: {
-    position: 'absolute', right: -16, width: 60, height: 60, borderRadius: 30,
-    shadowColor: '#06b6d4', shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3, shadowRadius: 10, elevation: 5
+    width: 52, height: 52, borderRadius: 26,
+    shadowColor: '#06b6d4', shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3, shadowRadius: 8, elevation: 4
   },
-  circleGradient: { flex: 1, borderRadius: 30, justifyContent: 'center', alignItems: 'center' },
+  circleGradient: { flex: 1, borderRadius: 26, justifyContent: 'center', alignItems: 'center' },
 
   linksRow: { 
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', 

@@ -61,7 +61,7 @@ export default function AdminTicketsScreen() {
     const ticketChannel = supabase
       .channel('realtime-admin-tickets')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'support_tickets' }, () => {
-        fetchTickets(); ේ
+        fetchTickets(); 
       })
       .subscribe();
 
