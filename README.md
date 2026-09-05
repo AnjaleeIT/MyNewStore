@@ -1,37 +1,3 @@
-# 📱 MyNewStore - E-Commerce Mobile App
-
-A feature-rich, modern E-Commerce Mobile Application built using **React Native**, **Expo**, and **Supabase**. This app provides a seamless shopping experience with product listings, search capabilities, and an intuitive user interface.
-
----
-
-## ✨ Features
-
--  **Product Catalog:** Browse products with clean layout and modern UI.
--  **Search & Filter:** Easily search for items and filter by categories.
--  **Cart & Checkout:** Smooth shopping cart flow and instant checkout experience.
--  **Backend Integration:** Powered by Supabase for real-time data fetching.
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend Framework:** React Native (Expo)
-- **Language:** TypeScript / JavaScript
-- **Backend & Database:** Supabase
-- **Styling:** React Native Stylesheet
-
----
-
-## 🚀 Getting Started
-
-Follow these steps to run the project locally on your machine:
-
-### 1. Clone the repository
-```bash
-git clone [https://github.com/AnjaleeIT/MyNewStore.git](https://github.com/AnjaleeIT/MyNewStore.git)
-cd MyNewStore
-
-
 # 🛍️ LeeStyle Store - Modern E-Commerce Application
 
 A feature-rich, high-performance E-Commerce platform built with a sleek mobile-first UI, featuring comprehensive customer shopping workflows, real-time analytics, and an integrated administrative portal.
@@ -73,7 +39,7 @@ A feature-rich, high-performance E-Commerce platform built with a sleek mobile-f
 <br/>
 
 <details open>
-  <summary><b> 3. Inventory & Catalog Management</b></summary>
+  <summary><b>📦 3. Inventory & Catalog Management</b></summary>
   <br/>
 
   | Inventory Management List | Add New Product Portal |
@@ -95,14 +61,13 @@ A feature-rich, high-performance E-Commerce platform built with a sleek mobile-f
 
 ## ✨ Key Features
 
-- ** User Portal:** Secure Authentication, Interactive Product Catalog, and Dedicated Customer Support Ticket Management.
-- ** Business Analytics:** Real-time revenue metrics, infrastructure load monitoring, and category-wise performance tracking.
-- ** Inventory Control:** Dynamic stock level monitoring, instant item updates, and effortless new product onboarding.
-- ** System Broadcasts:** Direct system-wide announcement dispatching tool for admin promotions.
+- **🔐 User Portal:** Secure Authentication, Interactive Product Catalog, and Dedicated Customer Support Ticket Management.
+- **📊 Business Analytics:** Real-time revenue metrics, infrastructure load monitoring, and category-wise performance tracking.
+- **📦 Inventory Control:** Dynamic stock level monitoring, instant item updates, and effortless new product onboarding.
+- **📢 System Broadcasts:** Direct system-wide announcement dispatching tool for admin promotions.
 
 ---
 
 ## 🚀 Deployment & Live Demo
 
 - 🌐 **Web Portal:** [View Live App on Vercel](https://your-project.vercel.app)
-
