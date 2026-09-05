@@ -1,22 +1,22 @@
 # 🛍️ LeeStyle Store - Modern E-Commerce Application
 
-A feature-rich, high-performance E-Commerce platform built with a sleek mobile-first UI, featuring comprehensive customer shopping workflows, real-time analytics, and an integrated administrative portal.
+A feature-rich, high performance E-Commerce platform built with a sleek mobile first UI, featuring comprehensive customer shopping workflows, real time analytics, and an integrated administrative portal.
 
 ---
 
 ## 📸 System Screenshots & Interface Previews
 
 <details open>
-  <summary><b>📱 1. Customer Experience & Shopping Interfaces</b></summary>
+  <summary><b>  1. Customer Experience & Shopping Interfaces</b></summary>
   <br/>
 
   | User Authentication | Home Page & Catalog |
   | :---: | :---: |
-  | ![Login Page](./L%20login%20page.png) | ![ L Home Page](./L%20Home%20page.jpg) |
+  | ![Login Page](./L%20login%20page.png) | ![ L Home Page](./L%20Home%20page.png) |
 
   | Explore & Trending Discoveries | Help & Support Hub |
   | :---: | :---: |
-  | ![ L explore Page](./L%20explore.jpg) | ![Help & Support](./Help%20%26%20support%20page.png) |
+  | ![ L explore Page](./L%20explore.png) | ![Help & Support](./Help%20%26%20support%20page.png) |
 
 </details>
 
