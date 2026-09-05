@@ -12,11 +12,11 @@ A feature-rich, high-performance E-Commerce platform built with a sleek mobile-f
 
   | User Authentication | Home Page & Catalog |
   | :---: | :---: |
-  | ![Login Page](./L%20login%20page.png) | ![Home Page](./L%20Home%20page.jpg) |
+  | ![Login Page](./L%20login%20page.png) | ![ L Home Page](./L%20Home%20page.jpg) |
 
   | Explore & Trending Discoveries | Help & Support Hub |
   | :---: | :---: |
-  | ![Explore Page](./L%20explore.jpg) | ![Help & Support](./Help%20%26%20support%20page.png) |
+  | ![ L explore Page](./L%20explore.jpg) | ![Help & Support](./Help%20%26%20support%20page.png) |
 
 </details>
 
